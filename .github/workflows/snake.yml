@@ -5,18 +5,26 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch:
 
+# Hata 128'i çözen yazma izni ayarı
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # Node.js uyarısını çözen v4 güncellemesi
+      - uses: actions/checkout@v4
+      
       - uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
-      - uses: crazy-max/ghaction-github-pages@v3.1.0
+            
+      # Node.js uyarısını çözen v4 güncellemesi
+      - uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
           build_dir: dist
